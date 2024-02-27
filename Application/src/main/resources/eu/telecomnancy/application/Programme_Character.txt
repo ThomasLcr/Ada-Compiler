@@ -1,0 +1,9 @@
+with Ada.Text_IO;
+use Ada.Text_IO;
+
+procedure Caractere_Val is
+   Caractere_A : Character := character'val(65);
+begin
+   Put("Le caractère correspondant au code ASCII 65 est : ");
+   Put(Caractere_A);
+end Caractere_Val;

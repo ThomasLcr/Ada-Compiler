@@ -1,0 +1,14 @@
+with Ada.Text_IO;
+use Ada.Text_IO;
+
+procedure Reste_Division is
+   X, Y, Resultat : Integer;
+begin
+   X := 4;
+   Y := 2;
+   if Y /= 0 then
+      Resultat := X rem Y;
+   else
+      Put("Erreur : La division par zéro n'est pas autorisée.");
+   end if;
+end Reste_Division;

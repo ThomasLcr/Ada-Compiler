@@ -1,0 +1,17 @@
+with Ada.Text_IO; use Ada.Text_IO;
+
+procedure Small is
+begin
+   x := x*x;
+
+end Small;
+
+
+
+
+
+
+
+
+
+

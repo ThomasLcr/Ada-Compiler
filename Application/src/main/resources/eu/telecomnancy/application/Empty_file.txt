@@ -1,0 +1,2 @@
+-- Ce programme vise à tester le comportement de notre compilateur dans le cas o`u le fichier source est vide
+-- Une erreur est sensée être générée au moment de la construction de l'AST

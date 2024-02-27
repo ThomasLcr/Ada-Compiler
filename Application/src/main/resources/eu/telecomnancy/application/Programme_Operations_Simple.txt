@@ -1,0 +1,18 @@
+with Ada.Text_IO ;
+use Ada.Text_IO ;
+procedure unDebut is
+-- VARIABLES
+x : integer ;
+y : integer ;
+z : integer ;
+-- PROCEDURE PRINCIPALE
+begin
+x := 1;
+y := 4;
+z := 2;
+sept := x + y + z;
+neuf := x + y * z;
+six := x*(y+z);
+var := x*y+z;
+test := (x - y + z) * x - y;
+end unDebut ;

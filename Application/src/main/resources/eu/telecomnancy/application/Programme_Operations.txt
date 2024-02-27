@@ -1,0 +1,28 @@
+with Ada.Text_IO ;
+use Ada.Text_IO ;
+procedure unDebut is
+function calcul1(val1 : integer; val2 : integer; val3 : integer) return integer is
+result : integer;
+begin
+result := val1 + val2 * val3;
+return result;
+end calcul1 ;
+function calcul2(val1 : integer; val2 : integer; val3 : integer) return integer is
+result : integer;
+begin
+result := val1 * (val2 + val3);
+return result;
+end calcul2 ;
+-- VARIABLES
+x : integer ;
+y : integer ;
+z : integer ;
+-- PROCEDURE PRINCIPALE
+begin
+x := 1;
+y := 4;
+x := x;
+z := 2;
+neuf := calcul1(x,y,z);
+six := calcul2(x,y,z);
+end unDebut ;
