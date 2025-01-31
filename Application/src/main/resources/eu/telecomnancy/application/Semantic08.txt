@@ -1,0 +1,23 @@
+with Ada.Text_IO;
+use Ada.Text_IO;
+procedure Semantic_8 is
+  function calcul1(val1 : integer; val2 : integer; val3 : integer) return integer is
+    result : integer;
+    begin
+      result := val1 + val2 * val3;
+    return result;
+  end calcul1 ; 
+  var : Integer := calcul1(10,5);  -- Erreur : 2 paramètres au lieu de 3
+begin
+  Put("Hello World!");
+end Semantic_8;
+
+
+
+
+
+
+
+
+
+

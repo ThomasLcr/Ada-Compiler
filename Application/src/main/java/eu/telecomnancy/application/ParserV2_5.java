@@ -2,6 +2,9 @@ package eu.telecomnancy.application;
 
 import java.util.ArrayList;
 
+import eu.telecomnancy.application.exception.ExceptionLexicale;
+import eu.telecomnancy.application.exception.ExceptionSemantique;
+import eu.telecomnancy.application.exception.ExceptionSyntaxique;
 import eu.telecomnancy.application.token.Token;
 
  

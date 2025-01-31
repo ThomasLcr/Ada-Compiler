@@ -1,0 +1,19 @@
+with Ada.Text_IO;
+use Ada.Text_IO;
+procedure Semantic_7 is
+   var : Integer := 0;
+begin
+   for i in 1 .. 5+4 loop -- Erreur : 5.4 n'est pas un entier
+      var := var * 2;
+   end loop;
+end Semantic_7;
+
+
+
+
+
+
+
+
+
+

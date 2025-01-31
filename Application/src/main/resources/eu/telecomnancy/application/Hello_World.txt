@@ -3,5 +3,7 @@ with Ada.Text_IO; use Ada.Text_IO;
 procedure Hello_World is
 begin
    Put("Hello, World!");
-   
+   Put("Hello, World! 2");
+   Put("Hello, World! 3");
+   Put("TEST");
 end Hello_World;

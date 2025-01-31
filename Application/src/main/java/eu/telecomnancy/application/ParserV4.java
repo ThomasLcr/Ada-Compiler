@@ -2,8 +2,10 @@ package eu.telecomnancy.application;
 
 import java.util.ArrayList;
 
-
-import eu.telecomnancy.application.token.NumToken;
+import eu.telecomnancy.application.exception.ExceptionLexicale;
+import eu.telecomnancy.application.exception.ExceptionSemantique;
+import eu.telecomnancy.application.exception.ExceptionSyntaxique;
+import eu.telecomnancy.application.token.IntegerToken;
 import eu.telecomnancy.application.token.StringToken;
 import eu.telecomnancy.application.token.Token;
 import eu.telecomnancy.application.token.VarToken;
@@ -566,8 +568,9 @@ public class ParserV4
             System.out.println("r22");
 
             TreeNode noeud = new TreeNode("");
+            TreeNode noeud2 = new TreeNode("");
 
-            identificateurVirgulePlus(noeud);
+            identificateurVirgulePlus(noeud2);
             if (tokenTag() == ":"){
 
                 advanceToken();
@@ -575,10 +578,12 @@ public class ParserV4
                 printErrorAndSkip("':' attendu. Dans fichier source, ligne : "  + this.tokens.get(currentTokenIndex).getLine());
 
             }
-            // A vérifier pour l'affichage de l'arbre ici
             if (tokenTag() == "VARIABLE"){
+
+                noeud.addAllSons(noeud2.getSons());
+                noeud.setLabel(((VarToken) getNextToken()).getValue());
+                pere.addSon(noeud);
                 advanceToken();
-                noeud.addSon(new TreeNode(((VarToken) getNextToken()).getValue()));
 
             } else{
                 printErrorAndSkip("identificateur attendu. Dans fichier source, ligne : "  + this.tokens.get(currentTokenIndex).getLine());
@@ -720,11 +725,13 @@ public class ParserV4
             TreeNode noeud = new TreeNode("T");
             T(noeud);
             expression1(pere);
-            //pere.addSon(noeud.getLastSon());
-            if(pere.getSons().size() != 0)
+            if(pere.getSons().size() != 0 && pere.getLabel()!="ARGUMENT")
                 pere.getLastSon().addFirstSon((noeud.getLastSon()));
+            else if(pere.getLabel()=="ARGUMENT"){
+                pere.addSon((noeud.getLastSon()));
+            }
             else
-                pere.addSon(noeud.getLastSon()); 
+                pere.addSon(noeud.getLastSon());
         } else {
             printErrorAndSkip("identificateur ou entier ou chaine ou 'true' ou 'false' ou 'null' ou '(' ou 'not' ou '-' ou 'character val'attendu. Dans fichier source, ligne : "  + this.tokens.get(currentTokenIndex).getLine());
         }
@@ -971,7 +978,7 @@ public class ParserV4
         System.out.print("P : ");
         if (tokenTag() == "NUM_CONST"){
             // On ajoute un noeud.
-            TreeNode noeud = new TreeNode(((NumToken) getNextToken()).getValue().toString());
+            TreeNode noeud = new TreeNode(Integer.toString(((IntegerToken) getNextToken()).getValue()));
             pere.addSon(noeud);
 
             System.out.println("r50");
@@ -1087,7 +1094,7 @@ public class ParserV4
     public void Precur(TreeNode pere) throws ExceptionSyntaxique {
 
         System.out.print("Precur : ");
-        if (tokenTag() == "."){
+        if (tokenTag() == "DOT"){
             //LL(3) ici
 
             advanceToken();
@@ -1127,7 +1134,7 @@ public class ParserV4
                 || tokenTag() == ")"
                 || tokenTag() == "loop"
                 || tokenTag() == "then"
-                || tokenTag() == "DOTDOT"
+                || tokenTag() == ":"
                 || tokenTag() == ","){
             System.out.println("r59");
             return;
@@ -1142,7 +1149,7 @@ public class ParserV4
 
         System.out.print("P1 : ");
         //System.out.println(tokenTag());
-        if (tokenTag() == "."
+        if (tokenTag() == "DOT"
                 || tokenTag() == "="
                 || tokenTag() == "/="
                 || tokenTag() == "<"
@@ -1160,7 +1167,7 @@ public class ParserV4
                 || tokenTag() == ")"
                 || tokenTag() == "loop"
                 || tokenTag() == "then"
-                || tokenTag() == "DOTDOT"
+                || tokenTag() == ":"
                 || tokenTag() == ","){
             System.out.println("r60");
             Precur(pere);
@@ -1230,7 +1237,7 @@ public class ParserV4
             affect.addSon(left3.getSons().get(0));
 
 
-            if (tokenTag() == "."){
+            if (tokenTag() == "DOT"){
 
                 advanceToken();
                 if (tokenTag() == "VARIABLE"){
@@ -1286,7 +1293,7 @@ public class ParserV4
             left2.getSons().get(0).addFirstSon(left1.getSons().get(0));
             left3.getSons().get(0).addFirstSon(left2.getSons().get(0));
             affect.addSon(left3.getSons().get(0));
-            if (tokenTag() == "."){
+            if (tokenTag() == "DOT"){
 
                 advanceToken();
                 if (tokenTag() == "VARIABLE"){
@@ -1326,7 +1333,7 @@ public class ParserV4
             // On ajoute un noeud.
             pere.addSon(affect);
 
-            TreeNode entier = new TreeNode(((NumToken) getNextToken()).getValue().toString());
+            TreeNode entier = new TreeNode(Integer.toString(((IntegerToken) getNextToken()).getValue()));
             TreeNode left1 = new TreeNode("");
             TreeNode left2 = new TreeNode("");
             TreeNode left3 = new TreeNode("");
@@ -1345,7 +1352,7 @@ public class ParserV4
             left4.getSons().get(0).addFirstSon(left3.getSons().get(0));
             affect.addSon(left4.getSons().get(0));
 
-            if(tokenTag() == "."){
+            if(tokenTag() == "DOT"){
                 advanceToken();
                 if (tokenTag() == "VARIABLE"){
                     // On ajoute un noeud.
@@ -1383,7 +1390,7 @@ public class ParserV4
             // On ajoute un noeud.
             pere.addSon(affect);
 
-            TreeNode character = new TreeNode(((NumToken) getNextToken()).getValue().toString());
+            TreeNode character = new TreeNode(Integer.toString(((IntegerToken) getNextToken()).getValue()));
             TreeNode left1 = new TreeNode("");
             TreeNode left2 = new TreeNode("");
             TreeNode left3 = new TreeNode("");
@@ -1400,7 +1407,7 @@ public class ParserV4
             left3.getSons().get(0).addFirstSon(left2.getSons().get(0));
             left4.getSons().get(0).addFirstSon(left3.getSons().get(0));
             affect.addSon(left4.getSons().get(0));
-            if(tokenTag() == "."){
+            if(tokenTag() == "DOT"){
                 advanceToken();
                 if (tokenTag() == "VARIABLE"){
                     // On ajoute un noeud.
@@ -1453,7 +1460,7 @@ public class ParserV4
             left4.getSons().get(0).addFirstSon(left3.getSons().get(0));
             affect.addSon(left4.getSons().get(0));
 
-            if(tokenTag() == "."){
+            if(tokenTag() == "DOT"){
                 advanceToken();
                 if (tokenTag() == "VARIABLE"){
                     // On ajoute un noeud.
@@ -1500,14 +1507,13 @@ public class ParserV4
             T1(left3);
             expression1(left4);
 
-
             left1.getSons().get(0).addFirstSon(fals);
             left2.getSons().get(0).addFirstSon(left1.getSons().get(0));
             left3.getSons().get(0).addFirstSon(left2.getSons().get(0));
             left4.getSons().get(0).addFirstSon(left3.getSons().get(0));
             affect.addSon(left4.getSons().get(0));
 
-            if(tokenTag() == "."){
+            if(tokenTag() == "DOT"){
                 advanceToken();
                 if (tokenTag() == "VARIABLE"){
                     // On ajoute un noeud.
@@ -1554,7 +1560,7 @@ public class ParserV4
             I1(left2);
             T1(left3);
             expression1(left4);
-            if(tokenTag() == "."){
+            if(tokenTag() == "DOT"){
                 advanceToken();
                 if (tokenTag() == "VARIABLE"){
                     // On ajoute un noeud.
@@ -1610,7 +1616,7 @@ public class ParserV4
                     left3.getSons().get(0).addFirstSon(left2.getSons().get(0));
                     left4.getSons().get(0).addFirstSon(left3.getSons().get(0));
                     affect.addSon(left4.getSons().get(0));
-                    if(tokenTag() == "."){
+                    if(tokenTag() == "DOT"){
                         advanceToken();
                         if (tokenTag() == "VARIABLE"){
                             // On ajoute un noeud.
@@ -1673,7 +1679,7 @@ public class ParserV4
                 left4.getSons().get(0).addFirstSon(left3.getSons().get(0));
                 affect.addSon(left4.getSons().get(0));
 
-                if(tokenTag() == "."){
+                if(tokenTag() == "DOT"){
                     advanceToken();
                     if (tokenTag() == "VARIABLE"){
                         // On ajoute un noeud.
@@ -1851,6 +1857,12 @@ public class ParserV4
 
     public void instruction1(TreeNode pere) throws ExceptionSyntaxique {
 
+        //Lignes de debug
+        //System.out.println("token actuel "+ this.tokens.get(currentTokenIndex).getTag());
+        //System.out.println("token suivant "+ this.tokens.get(currentTokenIndex+1).getTag());
+        //System.out.println("token précédent "+ this.tokens.get(currentTokenIndex-1).getTag());
+        //System.out.println("token index "+ currentTokenIndex);
+
         System.out.print("instruction1 : ");
         if (tokenTag() == ":"){
             pere.setLabel("AFFECT");
@@ -1896,58 +1908,128 @@ public class ParserV4
                 printErrorAndSkip("')' attendu. Dans fichier source, ligne : "  + this.tokens.get(currentTokenIndex).getLine());
             }
         }
-        else if (tokenTag() == "."){
-
-            pere.setLabel("APPEL");
-
-            System.out.println("r81");
+        else if (tokenTag() == "DOT"){
+            //Ici on est sur du LL(2)
             advanceToken();
-            if (tokenTag() == "VARIABLE"){
-                // On ajoute un noeud.
-                pere.addSon(new TreeNode(((VarToken) getNextToken()).getValue()));
-
+            if(tokenTag() == "VARIABLE"){
                 advanceToken();
-                I1(pere);
-                T1(pere);
-                expression1(pere);
-                if (tokenTag() == "."){
-
-                    advanceToken();
-                    if (tokenTag() == "VARIABLE"){
-                        // On ajoute un noeud.
-                        pere.addSon(new TreeNode(((VarToken) getNextToken()).getValue()));
-
+                if(tokenTag() == ":"){
+                    decrementToken();
+                    decrementToken();
+                    pere.setLabel("AFFECT");
+                    System.out.println("r82");
+                    if (tokenTag() == "DOT"){
                         advanceToken();
-                        if (tokenTag() == ":"){
+                        if (tokenTag() == "VARIABLE"){
+                            // On ajoute un noeud.
+                            pere.addSon(new TreeNode(((VarToken) getNextToken()).getValue()));
 
                             advanceToken();
-                            if (tokenTag() == "="){
-
+                            if (tokenTag() == ":"){
                                 advanceToken();
-                                expression(pere);
-                                if (tokenTag() == ";"){
+                                if (tokenTag() == "="){
 
                                     advanceToken();
-                                    return;
+                                    expression(pere);
+                                    if (tokenTag() == ";"){
+
+                                        advanceToken();
+                                        return;
+                                    } else{
+                                        printErrorAndSkip("';' attendu. Dans fichier source, ligne : "  + this.tokens.get(currentTokenIndex).getLine());
+                                    }
                                 } else{
-                                    printErrorAndSkip("';' attendu. Dans fichier source, ligne : "  + this.tokens.get(currentTokenIndex).getLine());
+                                    printErrorAndSkip("'=' attendu. Dans fichier source, ligne : "  + this.tokens.get(currentTokenIndex).getLine());
                                 }
                             } else{
-                                printErrorAndSkip("'=' attendu. Dans fichier source, ligne : "  + this.tokens.get(currentTokenIndex).getLine());
+                                printErrorAndSkip("':' attendu. Dans fichier source, ligne : "  + this.tokens.get(currentTokenIndex).getLine());
                             }
+            
                         } else{
-                            printErrorAndSkip("':' attendu. Dans fichier source, ligne : "  + this.tokens.get(currentTokenIndex).getLine());
+                            printErrorAndSkip("identificateur attendu. Dans fichier source, ligne : "  + this.tokens.get(currentTokenIndex).getLine());
                         }
                     } else{
-                        printErrorAndSkip("identificateur attendu. Dans fichier source, ligne : "  + this.tokens.get(currentTokenIndex).getLine());
+                        printErrorAndSkip("'.' attendu. Dans fichier source, ligne : "  + this.tokens.get(currentTokenIndex).getLine());
                     }
-                } else{
-                    printErrorAndSkip("'.' attendu. Dans fichier source, ligne : "  + this.tokens.get(currentTokenIndex).getLine());
                 }
-            } else{
+                else if (tokenTag() == "="
+                || tokenTag() == "/="
+                || tokenTag() == "<"
+                || tokenTag() == "<="
+                || tokenTag() == ">"
+                || tokenTag() == ">="
+                || tokenTag() == "rem"
+                || tokenTag() == "+"
+                || tokenTag() == "-"
+                || tokenTag() == "*"
+                || tokenTag() == "/"
+                || tokenTag() == ";"
+                || tokenTag() == ")"
+                || tokenTag() == "loop"
+                || tokenTag() == "then"
+                || tokenTag() == "DOT"){
+                    decrementToken();
+                    decrementToken();
+                    pere.setLabel("AFFECT");
+                    System.out.println("r81");
+                    if (tokenTag() == "DOT"){
+                        pere.setLabel("APPEL");
+                        advanceToken();
+                        if (tokenTag() == "VARIABLE"){
+                            // On ajoute un noeud.
+                            pere.addSon(new TreeNode(((VarToken) getNextToken()).getValue()));
+
+                            advanceToken();
+                            I1(pere);
+                            T1(pere);
+                            expression1(pere);
+                            if (tokenTag() == "DOT"){
+
+                                advanceToken();
+                                if (tokenTag() == "VARIABLE"){
+                                    // On ajoute un noeud.
+                                    pere.addSon(new TreeNode(((VarToken) getNextToken()).getValue()));
+
+                                    advanceToken();
+                                    if (tokenTag() == ":"){
+
+                                        advanceToken();
+                                        if (tokenTag() == "="){
+
+                                            advanceToken();
+                                            expression(pere);
+                                            if (tokenTag() == ";"){
+
+                                                advanceToken();
+                                                return;
+                                            } else{
+                                                printErrorAndSkip("';' attendu. Dans fichier source, ligne : "  + this.tokens.get(currentTokenIndex).getLine());
+                                            }
+                                        } else{
+                                            printErrorAndSkip("'=' attendu. Dans fichier source, ligne : "  + this.tokens.get(currentTokenIndex).getLine());
+                                        }
+                                    } else{
+                                        printErrorAndSkip("':' attendu. Dans fichier source, ligne : "  + this.tokens.get(currentTokenIndex).getLine());
+                                    }
+                                } else{
+                                    printErrorAndSkip("identificateur attendu. Dans fichier source, ligne : "  + this.tokens.get(currentTokenIndex).getLine());
+                                }
+                            } else{
+                                printErrorAndSkip("'.' attendu. Dans fichier source, ligne : "  + this.tokens.get(currentTokenIndex).getLine());
+                            }
+                        } else{
+                            printErrorAndSkip("identificateur attendu. Dans fichier source, ligne : "  + this.tokens.get(currentTokenIndex).getLine());
+                        }
+                    } else {
+                        printErrorAndSkip("'.' attendu. Dans fichier source, ligne : "  + this.tokens.get(currentTokenIndex).getLine());
+                    }
+                } else {
+                    printErrorAndSkip("identificateur attendu. Dans fichier source, ligne : "  + this.tokens.get(currentTokenIndex).getLine());
+                }
+            } else {
                 printErrorAndSkip("identificateur attendu. Dans fichier source, ligne : "  + this.tokens.get(currentTokenIndex).getLine());
             }
-        }
+        }   
         else if (tokenTag() == "="
                 || tokenTag() == "/="
                 || tokenTag() == "<"
@@ -1963,12 +2045,12 @@ public class ParserV4
                 || tokenTag() == ")"
                 || tokenTag() == "loop"
                 || tokenTag() == "then"
-                || tokenTag() == "DOTDOT"){
+                || tokenTag() == ":"){
             System.out.println("r82");
             I1(pere);
             T1(pere);
             expression1(pere);
-            if (tokenTag() == "."){
+            if (tokenTag() == "DOT"){
 
                 advanceToken();
                 if (tokenTag() == "VARIABLE"){
@@ -2014,7 +2096,7 @@ public class ParserV4
             advanceToken();
             return;
         }
-        else if (tokenTag() == "."
+        else if (tokenTag() == "DOT"
                 || tokenTag() == "="
                 || tokenTag() == "/="
                 || tokenTag() == "<"
@@ -2044,7 +2126,7 @@ public class ParserV4
             left4.getSons().get(0).addFirstSon(left3.getSons().get(0));
             affect.addSon(left4.getSons().get(0));
 
-            if (tokenTag() == "."){
+            if (tokenTag() == "DOT"){
                 advanceToken();
                 if (tokenTag() == "VARIABLE"){
                     // On ajoute un noeud.
@@ -2177,7 +2259,7 @@ public class ParserV4
             System.out.println("r90");
             TreeNode range = new TreeNode("range");
             expression(range);
-            if (tokenTag() == "DOTDOT") {
+            if (tokenTag() == ":") {
                 advanceToken();
             } else {
                 printErrorAndSkip("'..' attendu. Dans fichier source, ligne : "  + this.tokens.get(currentTokenIndex).getLine());
@@ -2225,7 +2307,7 @@ public class ParserV4
                     || tokenTag() == "character'val"
                     || tokenTag() == "VARIABLE" ){
                 expression(reverserange);
-                if (tokenTag() == "DOTDOT") {
+                if (tokenTag() == ":") {
                     advanceToken();
                 } else {
                     printErrorAndSkip("'..' attendu. Dans fichier source, ligne : "  + this.tokens.get(currentTokenIndex).getLine());
@@ -2263,11 +2345,7 @@ public class ParserV4
     }
 
     public void instructionPlus(TreeNode pere) throws ExceptionSyntaxique {
-        //Lignes de debug
-        System.out.println("token actuel "+ this.tokens.get(currentTokenIndex).getTag());
-        System.out.println("token suivant "+ this.tokens.get(currentTokenIndex+1).getTag());
-        System.out.println("token précédent "+ this.tokens.get(currentTokenIndex-1).getTag());
-        System.out.println("token index "+ currentTokenIndex);
+
         System.out.print("instructionPlus : ");
         if (tokenTag() == "VARIABLE"
                 || tokenTag() == "NUM_CONST"

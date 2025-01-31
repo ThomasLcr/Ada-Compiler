@@ -1,0 +1,16 @@
+with Ada.Text_IO;
+use Ada.Text_IO;
+procedure Semantic_10 is
+   var : Integer := 0;
+begin
+   variable := var * 2;   -- Erreur : variable n'a pas été intialisée 
+end Semantic_10;
+
+
+
+
+
+
+
+
+

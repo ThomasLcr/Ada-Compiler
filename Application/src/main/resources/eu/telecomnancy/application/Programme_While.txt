@@ -2,9 +2,9 @@ with Ada.Text_IO;
 use Ada.Text_IO;
 
 procedure Boucle_Avec_While is
-   i : Integer := 1;
+   i : Integer := 3-1+1;
 begin
-   while i <= 5 loop
+   while i = 3-1+1 loop
       Put("Hello World !");
       i := i + 1;
    end loop;

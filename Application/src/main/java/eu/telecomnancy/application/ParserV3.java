@@ -2,8 +2,8 @@ package eu.telecomnancy.application;
 
 import java.util.ArrayList;
 
-
-import eu.telecomnancy.application.token.NumToken;
+import eu.telecomnancy.application.exception.ExceptionSyntaxique;
+import eu.telecomnancy.application.token.IntegerToken;
 import eu.telecomnancy.application.token.Token;
 import eu.telecomnancy.application.token.VarToken;
 
@@ -1164,7 +1164,7 @@ public class ParserV3
         System.out.print("P : ");
         if (tokenTag() == "NUM_CONST"){
             // On ajoute un noeud.
-            noeud.addSon(new TreeNode(((NumToken) getNextToken()).getValue().toString()));
+            noeud.addSon(new TreeNode(Integer.toString(((IntegerToken) getNextToken()).getValue())));
 
             System.out.println("r54");
             advanceToken();
@@ -1237,7 +1237,7 @@ public class ParserV3
                 advanceToken();
                 if (tokenTag() == "NUM_CONST"){
                     // On ajoute un noeud.
-                    noeud.addSon(new TreeNode(((NumToken) getNextToken()).getValue().toString()));
+                    noeud.addSon(new TreeNode(Integer.toString(((IntegerToken) getNextToken()).getValue())));
 
                     advanceToken();
                     if (tokenTag() == ")"){
@@ -1529,7 +1529,7 @@ public class ParserV3
         }
         else if (tokenTag() == "NUM_CONST"){
             // On ajoute un noeud.
-            noeud.addSon(new TreeNode(((NumToken) getNextToken()).getValue().toString()));
+            noeud.addSon(new TreeNode(Integer.toString(((IntegerToken) getNextToken()).getValue())));
 
             advanceToken();
             Precur(noeud);
@@ -1804,7 +1804,7 @@ public class ParserV3
                     if (tokenTag() == "NUM_CONST")
                     {
                         // On ajoute un noeud.
-                        noeud.addSon(new TreeNode(((NumToken) getNextToken()).getValue().toString()));
+                        noeud.addSon(new TreeNode(Integer.toString(((IntegerToken) getNextToken()).getValue())));
                         advanceToken();
                         if (tokenTag() == ")"){
                             // On ajoute un noeud.

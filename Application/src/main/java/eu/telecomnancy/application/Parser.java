@@ -11,7 +11,9 @@ import java.util.Arrays;
 // import org.checkerframework.checker.units.qual.t;
 
 import eu.telecomnancy.application.token.Token;
-
+import eu.telecomnancy.application.exception.ExceptionLexicale;
+import eu.telecomnancy.application.exception.ExceptionSemantique;
+import eu.telecomnancy.application.exception.ExceptionSyntaxique;
  
 public class Parser 
 {

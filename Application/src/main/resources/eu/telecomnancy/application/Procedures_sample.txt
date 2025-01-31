@@ -3,8 +3,17 @@ with Ada.Text_IO; use Ada.Text_IO;
 procedure Simple_Program is
    -- Déclaration de procédure
    procedure Afficher_Message(Message : String) is
+      procedure Saluer is
+      begin
+            Afficher_Message("Bonjour, Ada!");
+      end Saluer;
+      procedure Saluer2 is
+      begin
+            Afficher_Message("Bonjour, Ada!");
+      end Saluer2;
+   i,k : Integer := 1;
    begin
-      Put(Message);
+      i:=2;
    end Afficher_Message;
 
    -- Déclaration d'une autre procédure
@@ -18,10 +27,10 @@ procedure Simple_Program is
    begin
       Afficher_Message("Au revoir, Ada!");
    end Dire_AuRevoir;
-
+j : Integer := 1;
 begin
    -- Appel de procédure
-   Saluer;
+   
 
    -- Appel d'une autre procédure
    Dire_AuRevoir;

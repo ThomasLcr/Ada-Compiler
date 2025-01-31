@@ -1,0 +1,31 @@
+with Ada.Text_IO;
+use Ada.Text_IO;
+procedure Semantic_11 is
+  function calcul1(val1 : integer; val2 : integer; val3 : integer) return integer is
+    result : integer;
+    begin
+      result := val1 + val2 * val3;
+    -- Erreur: Il manque le return de la valeur
+  end calcul1 ; 
+  var:integer;
+begin
+   Put("Hello, World!");
+end Semantic_11;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,14 @@
+with Ada.Text_IO;
+use Ada.Text_IO;
+
+procedure Ma_procedure is
+   val1 : boolean :=true;
+   val2 : boolean :=false;
+begin
+    -- Affichage de la valeur avant la négation
+   Put(val1);
+   -- Négation de la valeur
+   val1 := not val1 or val2;
+   -- Affichage de la valeur après la négation
+   Put(val1);
+end Ma_procedure;

@@ -1,0 +1,27 @@
+with Ada.Text_IO; use Ada.Text_IO;
+
+procedure Semantic_18 is
+    function calcul1(val1 : integer; val2 : integer; val3 : integer) return integer is
+    N1:integer;
+    result1: integer;
+        function calcul2(val1 : integer) return integer is
+            N2 : integer;
+            result2:integer;
+            begin
+                N2 :=4;
+                result2 := val1 * val1;
+            return result2;
+        end calcul2 ;
+        begin
+            N1 := N2; -- Pas accès à la variable N2
+            result1 := val1 + val2 * val3;
+        return result1;
+    end calcul1 ;
+x : integer :=1;
+y : integer :=4;
+z : integer :=2;
+var: integer;
+begin
+    var:= calcul1(x,y,z);
+
+end Semantic_18;

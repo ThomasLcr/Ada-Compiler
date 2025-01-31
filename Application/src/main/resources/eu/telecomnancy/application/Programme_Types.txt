@@ -1,0 +1,12 @@
+with Ada.Text_IO; use Ada.Text_IO;
+
+procedure Types is
+a: integer := 2;
+x: integer := 1 + 2 - 3;
+b: float :=2.45;
+c: string :="ouai";
+d: character := 'y';
+e: boolean := true;
+begin
+   Put("Hello, World!");
+end Types;

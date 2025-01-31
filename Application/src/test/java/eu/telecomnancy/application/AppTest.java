@@ -7,6 +7,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import eu.telecomnancy.application.App;
+import eu.telecomnancy.application.exception.ExceptionLexicale;
 import eu.telecomnancy.application.token.KeywordsEnum;
 import eu.telecomnancy.application.token.KeywordsToken;
 import eu.telecomnancy.application.token.LibraryToken;

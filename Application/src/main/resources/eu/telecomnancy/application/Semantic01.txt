@@ -1,0 +1,19 @@
+with Ada.Text_IO;
+use Ada.Text_IO;
+procedure Semantic_1 is
+  X : Integer :=1 ;
+  Y : Float := 3.14;
+  Z : Integer := X + Y; -- Erreur : types incompatibles
+begin
+  Put("Hello World!");
+end Semantic_1;
+
+
+
+
+
+
+
+
+
+

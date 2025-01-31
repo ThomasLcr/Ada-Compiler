@@ -3,17 +3,14 @@ use Ada.Text_IO;
 
 procedure Ma_procedure is
 -- VARIABLES
-x : integer ;
-y : integer ;
-z : integer ;
-i : Integer := 1;
+x : integer := 1;
+y : integer := 2;
+z : integer := 3;
+i : Integer := 0;
+operation : integer;
 -- PROCEDURE PRINCIPALE
 begin
-   x := 1;
-   y := 4;
-   z := 2;
-   operation := x + y * z;
-
+   operation := z + y - x;
    while i <= 5 loop
       Put("Hello !");
       i := i + 1;

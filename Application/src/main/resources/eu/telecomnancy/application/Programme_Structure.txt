@@ -1,0 +1,11 @@
+with Ada.Text_IO;
+use Ada.Text_IO;
+procedure Semantic_5 is
+  type point is record
+    x : integer ;
+    y : integer ;
+  end record;
+  p : point;
+begin
+  p.x := 5; -- Erreur : "string" n'est pas un entier
+end Semantic_5;

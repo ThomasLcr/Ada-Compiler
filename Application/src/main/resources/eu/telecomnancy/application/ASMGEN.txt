@@ -1,0 +1,63 @@
+with Ada.Text_IO;
+use Ada.Text_IO;
+procedure Ma_procedure is
+  function recursiveCheck(n: integer ; curseur: integer) return integer is
+    result : integer;
+    begin 
+     if curseur >= n then
+      result := 1;
+    elsif n rem curseur = 0 then
+      result := 0;
+    else
+      result := recursiveCheck(n,curseur + 1);
+    end if;
+
+    return result;
+  end recursiveCheck ; 
+
+  function est_premier(n: integer) return integer is
+    result : integer;
+    begin
+     result := 1;
+      if n <= 1 then
+        result := 0;
+      elsif n rem 2 = 0 and n/=2 then -- si n est un multiple de 2 autre que 2
+        result := 0;
+      elsif n = 2 then
+        result :=1;
+      else
+        result:= recursiveCheck(n,3);
+      end if;
+    return result;
+  end est_premier ; 
+
+  function print_diviseurs_premiers(n:integer) return integer is
+    result : integer;
+    diviseur: integer;
+    var: integer;
+    begin
+    diviseur :=2;
+    while diviseur < n loop
+      var := est_premier(diviseur);
+      if var=1  and (n rem diviseur = 0) then
+        Put(diviseur);
+      end if;
+      diviseur := diviseur + 1;
+    end loop;
+    return 0;
+    end print_diviseurs_premiers;
+
+  val : integer;
+
+
+
+begin
+  val := 40320; -- c'est 8!
+
+  if est_premier(val) = 0 then
+    Put("La valeur n est pas un nombre premier. Voici ses diviseurs premiers:");
+    val := print_diviseurs_premiers(val);
+  else
+    Put("La valeur donnée est un nombre premier.");
+  end if;
+end Ma_procedure;

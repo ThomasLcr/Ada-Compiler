@@ -1,0 +1,19 @@
+with Ada.Text_IO;
+use Ada.Text_IO;
+procedure Semantic_4 is
+   procedure My_Procedure(Item : in Integer) is
+   begin
+      Item := 42; -- Erreur : Tentative de modifier un paramètre en mode "in"
+   end My_Procedure;
+begin
+   My_Procedure(10);  
+end Semantic_4;
+
+
+
+
+
+
+
+
+

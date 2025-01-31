@@ -1,0 +1,31 @@
+with Ada.Text_IO;
+use Ada.Text_IO;
+procedure Semantic_11 is
+  function calcul1(val1 : integer; val2 : integer; val3 : integer) return integer is
+    result : integer;
+    begin
+      result := val1 + val2 * val3;
+    return 3+4*(5+"8");
+  end calcul1 ; 
+  var : integer := calcul1(10+"8",4,3) + calcul2(3,8,7);  -- Erreur : Integer attendu en param 1 mais String fourni
+begin
+   Put("Hello, World!");
+end Semantic_11;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

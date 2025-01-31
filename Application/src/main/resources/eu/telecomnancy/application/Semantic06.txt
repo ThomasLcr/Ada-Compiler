@@ -1,0 +1,21 @@
+with Ada.Text_IO;
+use Ada.Text_IO;
+procedure Semantic_6 is
+  type point is record
+    x : integer ;
+    y : integer ;
+  end record;
+  p : point;
+begin
+  p.z := 20; -- Erreur : z n'est pas un membre du type point
+end Semantic_6;
+
+
+
+
+
+
+
+
+
+

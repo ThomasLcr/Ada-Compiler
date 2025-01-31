@@ -2,17 +2,18 @@ with Ada.Text_IO ;
 use Ada.Text_IO ;
 procedure unDebut is
 -- VARIABLES
-x : integer ;
-y : integer ;
-z : integer ;
+x : integer := 1;
+y : integer := 4;
+z : integer := 2;
+sept : integer;
+neuf : integer;
+six : integer;
+var : integer;
 -- PROCEDURE PRINCIPALE
 begin
-x := 1;
-y := 4;
-z := 2;
 sept := x + y + z;
 neuf := x + y * z;
 six := x*(y+z);
-var := x*y+z;
-test := (x - y + z) * x - y;
+var := (x - y + z) * x - y;
+Put(var);
 end unDebut ;

@@ -1,0 +1,18 @@
+with Ada.Text_IO;
+use Ada.Text_IO;
+procedure Semantic_3 is
+   X : Integer := Y; -- Erreur : Y n'est pas encore déclaré
+   Y : Integer := 42;
+begin
+   Put("Hello, World!");
+end Semantic_3;
+
+
+
+
+
+
+
+
+
+

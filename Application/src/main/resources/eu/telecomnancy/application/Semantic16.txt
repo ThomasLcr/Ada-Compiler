@@ -1,0 +1,20 @@
+-- 16. Accès à une variable hors du bloc
+-- #########################################
+
+with Ada.Text_IO; 
+use Ada.Text_IO;
+procedure Semantique_16 is
+   procedure Test is
+       A : Integer := 10;
+   begin
+       Put("test");
+   end Test;
+
+   function Ma_Fonction return Integer is
+   begin
+      Put("test");
+      return A; --Erreur: Tentative d'accéder à A à l'extérieur de son bloc
+   end Ma_Fonction;
+ begin
+    Put("Hello World!");
+ end Semantique_16;

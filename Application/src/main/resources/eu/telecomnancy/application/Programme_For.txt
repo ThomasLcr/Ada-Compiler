@@ -3,7 +3,9 @@ use Ada.Text_IO ;
 
 procedure Boucle_Simple is
 begin
-   for I in 1..5 loop
-      Put("Truc");
+   for I in 1 .. (5-1)*2 loop
+      if I rem 2 = 0 then
+         Put(I);
+      end if;
    end loop;
 end Boucle_Simple;

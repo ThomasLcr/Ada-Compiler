@@ -1,0 +1,10 @@
+-- 17. Division statique par 0 (ou 0.0)
+-- ####################################
+
+with Ada.Text_IO;
+use Ada.Text_IO;
+procedure Semantic_17 is
+   Resultat : Integer;
+begin
+   Resultat := 1 / 0; -- Erreur: division par 0
+end Semantic_17;

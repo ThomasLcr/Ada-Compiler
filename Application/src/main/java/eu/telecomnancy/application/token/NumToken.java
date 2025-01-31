@@ -5,14 +5,14 @@ public class NumToken extends Token{ // token pour les nombres flottants et enti
     private int intValue;
     private float floatValue;
 
-    public NumToken(String tag, int line, Number num) { //overload
+    public NumToken(String tag, int line, String num) { //overload
         super(tag, line);
-        if (num instanceof Float || num instanceof Double) {
-            isFloat = true;
-            floatValue = num.floatValue();
-        } else {
-            isFloat = false;
-            intValue = num.intValue();
+        if(num.contains(".")){
+            this.floatValue = Float.parseFloat(num);
+            this.isFloat = true;
+        }else{
+            this.intValue = Integer.parseInt(num);
+            this.isFloat = false;
         }
     }
 
@@ -22,6 +22,10 @@ public class NumToken extends Token{ // token pour les nombres flottants et enti
         }else{
             return intValue;
         }
+    }
+
+    public boolean isFloat(){
+        return isFloat;
     }
     
 }

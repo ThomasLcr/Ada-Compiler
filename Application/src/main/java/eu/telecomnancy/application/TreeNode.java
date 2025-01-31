@@ -12,12 +12,14 @@ public class TreeNode {
     private ArrayList<TreeNode> sons;
     private static int currentId = 0;
     private int id;
+    private TreeNode parent;
 
     public TreeNode(String label, TreeNode... sons) {
         this.label = label;
         this.id = currentId;
         this.sons = new ArrayList<TreeNode>();
         this.addAllSons(sons);
+        this.parent = null;
         currentId++;
     }
 
@@ -27,6 +29,11 @@ public class TreeNode {
 
     public void addSon(TreeNode son) {
         this.sons.add(son);
+        son.parent = this;
+    }
+
+    public TreeNode getParent() {
+        return this.parent;
     }
 
     public void addAllSons(TreeNode... sons) {
@@ -50,9 +57,89 @@ public class TreeNode {
         this.setSons(newSons);
     }
 
+    public void removeSon(TreeNode son){
+        this.sons.remove(son);
+    }
+
     public ArrayList<TreeNode> getSons() {
         return this.sons;
     }
+
+    public TreeNode getFirstSon() {
+        if (this.sons.isEmpty()) {
+            return null;
+        }
+        return this.sons.get(0);
+    }
+
+    public void rightRotation() {
+        if (this.sons.size() < 2) {
+            // La rotation n'est pas possible avec moins de deux fils
+            return;
+        }
+    
+        // Récupérer le fils gauche
+        TreeNode leftChild = this.sons.get(0);
+    
+        // Vérifier si le fils gauche a lui-même des fils
+        if (!leftChild.sons.isEmpty()) {
+            // Déplacer le fils droit du fils gauche pour devenir le fils gauche du nœud actuel
+            this.sons.set(0, leftChild.sons.get(1));
+        } else {
+            // Si le fils gauche n'a pas de fils, le retirer simplement
+            this.sons.remove(0);
+        }
+    
+        // Déplacer le nœud actuel pour devenir le fils droit du fils gauche d'origine
+        leftChild.sons.set(1, this);
+    
+        // Mettre à jour les références parentales
+        TreeNode oldParent = this.parent;
+        this.parent = leftChild;
+        leftChild.parent = oldParent;
+    
+        // Mettre à jour les fils du parent d'origine, s'il existe
+        if (oldParent != null) {
+            int index = oldParent.sons.indexOf(this);
+            oldParent.sons.set(index, leftChild);
+        }
+    }
+
+    public void leftRotation() {
+        //System.out.println(this.label);
+        if (this.sons.size() < 2) {
+            // La rotation n'est pas possible avec moins de deux fils
+            return;
+        }
+
+        // Récupérer le fils droit
+        TreeNode rightChild = this.sons.get(1);
+
+        // Vérifier si le fils droit a lui-même des fils
+        if (!rightChild.sons.isEmpty()) {
+            // Déplacer le fils gauche du fils droit pour devenir le fils droit du nœud actuel
+            this.sons.set(1, rightChild.sons.get(0));
+        } else {
+            // Si le fils droit n'a pas de fils, le retirer simplement
+            this.sons.remove(1);
+        }
+
+        // Déplacer le nœud actuel pour devenir le fils gauche du fils droit d'origine
+        rightChild.sons.set(0, this);
+
+        // Mettre à jour les références parentales
+        TreeNode oldParent = this.parent;
+        this.parent = rightChild;
+        rightChild.parent = oldParent;
+
+        // Mettre à jour les fils du parent d'origine, s'il existe
+        if (oldParent != null) {
+            int index = oldParent.sons.indexOf(this);
+            oldParent.sons.set(index, rightChild);
+        }
+    }
+    
+
 
     public TreeNode getLastSon() {
         if (this.sons.isEmpty()) {
@@ -300,6 +387,10 @@ public class TreeNode {
             }
         }
         this.sons.forEach(TreeNode::afterClean);
+    }
+
+    public int getNbSons(){        
+        return sons.size();
     }
 
 }

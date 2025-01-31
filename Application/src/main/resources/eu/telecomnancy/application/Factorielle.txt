@@ -1,0 +1,20 @@
+with Ada.Text_IO;
+use Ada.Text_IO;
+procedure Ma_procedure is
+  function factorielle(n : integer) return integer is
+    result : integer;
+    begin
+      if n<=1 then
+      result:=1;
+      else
+      result := n*factorielle(n-1) ;
+      end if;
+    return result;
+  end factorielle ; 
+  test : integer;
+begin
+    test := factorielle(2)+factorielle(5);
+    Put(test);
+end Ma_procedure;
+
+ 
